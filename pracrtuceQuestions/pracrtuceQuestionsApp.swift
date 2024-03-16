@@ -11,7 +11,9 @@ import SwiftUI
 struct pracrtuceQuestionsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
+		//also need this for @Model
+        //.modelContainer(for: InventoryItem.self)
     }
 }
