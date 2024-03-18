@@ -87,7 +87,72 @@ import SwiftData
 //    }
 //}
 
+
+
+
 										/* LISTS */
+///@Bindable TextEditor with ColorPicker?
+//@Observable class Item : Identifiable {
+//    var string: String = "Hello"
+//    var color: Color = .red
+//}
+//struct MainView: View {
+//    @State private var items = [Item]()
+//    var body: some View {
+//        NavigationStack {
+//            List(items) {
+//                item in
+//                @Bindable var item = item
+//                ColorPicker(selection: $item.color, label: {
+//                    TextField("Text", text: $item.string)
+//                })
+//            }
+//            .padding()
+//            .navigationTitle("yeet")
+//            .toolbar {
+//                Button(action : {
+//                    items.insert(Item(), at: 0)
+//                }, label: {
+//                    Image(systemName: "plus")
+//                })
+//            }
+//        }
+//    }
+//}
+
+
+///DatePicker with a TextField, using @Bindable
+//@Observable class DateItem: Identifiable {
+//    var selectedDate = Date()
+//    var dateLabel = ""
+//}
+//
+//
+//struct MainView: View {
+//    @State private var dates = [DateItem]()
+//    var body: some View {
+//        NavigationStack {
+//            List(dates) { d in
+//                @Bindable var d = d
+//                DatePicker(selection: $d.selectedDate, displayedComponents: .date, label: {
+//                    TextField("Enter Task", text: $d.dateLabel)
+//                })
+//            }
+//            .navigationTitle("Dates")
+//            .toolbar {
+//                Button(action: {
+//                    dates.insert(DateItem(), at: 0)
+//                }, label: {
+//                    Image(systemName: "plus")
+//                })
+//            }
+//        }
+//        .padding()
+//    }
+//}
+
+
+
 
 ///List example with a Text Field and a segmented picker
 //@Observable class Task: Identifiable {
