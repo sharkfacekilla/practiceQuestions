@@ -741,8 +741,140 @@ import SwiftData
 //}
 
 
+
+
+///Q53: Picker with a Slider. Changes image size
+//struct SettingsView: View {
+//    @Binding var iconName: String
+//    @Binding var iconSize: CGFloat
+//    let icons = ["sun.max", "cloud.sun", "cloud", "cloud.rain"]
+//    var body: some View {
+//        VStack {
+//            Picker("Weather", selection: $iconName) {
+//                ForEach(icons, id: \.self) { icon in
+//                    Image(systemName: icon)
+//                }
+//            }.pickerStyle(.wheel)
+//        }
+//        Slider(value: $iconSize, in: 10...100, step: 10)
+//    }
+//}
+//
+//
+//struct MainView: View {
+//    @State private var showSettings: Bool = false
+//    @State private var selectedIcon: String = "sun.max"
+//    @State private var iconSize: CGFloat = 50
+//    
+//    var body: some View {
+//        NavigationStack {
+//            VStack {
+//                if (showSettings) {
+//                    SettingsView(iconName: $selectedIcon, iconSize: $iconSize)
+//                } else {
+//                    Image(systemName: selectedIcon)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: iconSize, height: iconSize)
+//                }
+//            }
+//            .toolbar {
+//                Button(action: {
+//                    showSettings.toggle()
+//                }, label: {
+//                    Image(systemName: showSettings ? "house" : "gear")
+//                })
+//            }
+//            .navigationTitle("Question 53")
+//        }
+//    }
+//}
+
+
+
+///Q55: Tab View with RGB Picker Tab and Test Tab with a Circle colour affected by the RGB Picker Tab
+struct ColorView: View {
+    @Binding var r: CGFloat
+    @Binding var g: CGFloat
+    @Binding var b: CGFloat
+    var body: some View {
+        VStack {
+            HStack {
+                Text("Red")
+                Slider(value: $r, in: 0...1) {
+                    Text("Red")
+                }
+            }
+            .padding()
+            HStack {
+                Text("Green")
+                Slider(value: $g, in: 0...1) {
+                    Text("Green")
+                }
+            }
+            .padding()
+            HStack {
+                Text("Blue")
+                Slider(value: $b, in: 0...1) {
+                    Text("Blue")
+                }
+            }
+            .padding()
+        }
+        .padding()
+    }
+}
+
+struct TestView: View {
+    @Binding var r: CGFloat
+    @Binding var g: CGFloat
+    @Binding var b: CGFloat
+    var body: some View {
+        Circle()
+            .foregroundColor(Color.init(red: r, green: g, blue: b, opacity: 1))
+            .padding()
+            .frame(width: 250, height: 250)
+    }
+}
+
+struct ShapeView: View {
+    @Binding var selectedIcon: String
+    let icons = ["paintbrush", "pencil"]
+    var body: some View {
+        Picker("Icon", selection: $selectedIcon) {
+            ForEach(icons, id: \.self) { icon in
+                Image(systemName: icon)
+            }
+        }
+        .pickerStyle(.wheel)
+    }
+}
+
+struct MainView: View {
+    @State private var selectedIcon: String = "paintbrush"
+    @State private var r: CGFloat = 0.5
+    @State private var g: CGFloat = 1
+    @State private var b: CGFloat = 0.2
+    var body: some View {
+        TabView {
+            ShapeView(selectedIcon: $selectedIcon)
+                .tabItem {
+                    Text("Shape")
+                }
+            ColorView(r: $r, g: $g, b: $b)
+                .tabItem {
+                    Text("Colour")
+                }
+            TestView(r: $r, g: $g, b: $b)
+                .tabItem {
+                    Text("Test")
+                }
+        }
+    }
+}
+
 #Preview{
-	///needed if using @Model, otherwise preview will crash and you will have a bad time :(
-	//MainView().modelContainer(for: InventoryItem.self).preferredColorScheme(.dark)
-	MainView()
+    ///needed if using @Model, otherwise preview will crash and you will have a bad time :(
+    //MainView().modelContainer(for: InventoryItem.self).preferredColorScheme(.dark)
+    MainView()
 }
