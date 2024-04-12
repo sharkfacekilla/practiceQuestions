@@ -927,6 +927,65 @@ struct MainView: View {
 }
 
 
+
+
+//CODE FROM QUIZ 5, @MODEL @BINDABLE ETC.
+// @Model class Student: Identifiable {
+//    var studentName: String = "A Name"
+//    var studentNumber: String = "1234"
+   
+//    init(studentName: String, studentNumber: String) {
+//        self.studentName = studentName
+//        self.studentNumber = studentNumber
+//    }
+// }
+
+// struct RowView: View {
+//    @Binding var studentName: String
+//    @Binding var studentNumber: String
+//    var body: some View {
+//        HStack {
+//            TextField("A name", text: $studentName)
+//            TextField("123", text: $studentNumber)
+//        }
+//    }
+// }
+
+// struct ContentView: View {
+//    @Query private var students: [Student]
+//    @Environment (\.modelContext) private var modelContext
+   
+//    var body: some View {
+//        NavigationStack() {
+//            VStack {
+//                List (students) { student in
+//                    @Bindable var student = student
+//                    RowView(studentName: $student.studentName, studentNumber: $student.studentNumber)
+                   
+//                        .swipeActions(edge: .trailing) {
+//                            Button(role: .destructive) {
+//                                let s = student
+//                                modelContext.delete(s)
+//                            } label: {
+//                                Label("Delete", systemImage: "trash")
+//                            }
+//                        }
+//                }
+//            }
+           
+           
+//            .toolbar {
+//                Button(action: {
+//                    let student = Student(studentName: "A Name", studentNumber: "123")
+//                    modelContext.insert(student)
+//                }, label: {
+//                    Image(systemName: "plus")
+//                })
+//            }
+//        }
+//    }
+// }
+
 #Preview{
     ///needed if using @Model, otherwise preview will crash and you will have a bad time :(
 //    MainView().modelContainer(for: InventoryItem.self).preferredColorScheme(.dark)
