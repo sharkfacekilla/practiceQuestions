@@ -12,8 +12,8 @@ struct pracrtuceQuestionsApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+            //also need this for @Model
+            //.modelContainer(for: InventoryItem.self)
         }
-		//also need this for @Model
-        //.modelContainer(for: InventoryItem.self)
     }
 }

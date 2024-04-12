@@ -421,7 +421,7 @@ import SwiftData
 //        self.itemTxt = itemTxt
 //        self.fav = fav
 //    }
-//	}
+//}
 //
 //struct DetailView: View {
 //    @Bindable var inventoryItem: InventoryItem
@@ -433,7 +433,6 @@ import SwiftData
 //                    Image(systemName: inventoryItem.itemTxt)
 //                        .padding()
 //                        .border(Color.red, width: 5)
-//
 //                }
 //                else {
 //                    Image(systemName: inventoryItem.itemTxt)
@@ -793,88 +792,143 @@ import SwiftData
 
 
 ///Q55: Tab View with RGB Picker Tab and Test Tab with a Circle colour affected by the RGB Picker Tab
-struct ColorView: View {
-    @Binding var r: CGFloat
-    @Binding var g: CGFloat
-    @Binding var b: CGFloat
+//struct ColorView: View {
+//    @Binding var r: CGFloat
+//    @Binding var g: CGFloat
+//    @Binding var b: CGFloat
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                Text("Red")
+//                Slider(value: $r, in: 0...1) {
+//                    Text("Red")
+//                }
+//            }
+//            .padding()
+//            HStack {
+//                Text("Green")
+//                Slider(value: $g, in: 0...1) {
+//                    Text("Green")
+//                }
+//            }
+//            .padding()
+//            HStack {
+//                Text("Blue")
+//                Slider(value: $b, in: 0...1) {
+//                    Text("Blue")
+//                }
+//            }
+//            .padding()
+//        }
+//        .padding()
+//    }
+//}
+//
+//struct TestView: View {
+//    @Binding var r: CGFloat
+//    @Binding var g: CGFloat
+//    @Binding var b: CGFloat
+//    var body: some View {
+//        Circle()
+//            .foregroundColor(Color.init(red: r, green: g, blue: b, opacity: 1))
+//            .padding()
+//            .frame(width: 250, height: 250)
+//    }
+//}
+//
+//struct ShapeView: View {
+//    @Binding var selectedIcon: String
+//    let icons = ["paintbrush", "pencil"]
+//    var body: some View {
+//        Picker("Icon", selection: $selectedIcon) {
+//            ForEach(icons, id: \.self) { icon in
+//                Image(systemName: icon)
+//            }
+//        }
+//        .pickerStyle(.wheel)
+//    }
+//}
+//
+//struct MainView: View {
+//    @State private var selectedIcon: String = "paintbrush"
+//    @State private var r: CGFloat = 0.5
+//    @State private var g: CGFloat = 1
+//    @State private var b: CGFloat = 0.2
+//    var body: some View {
+//        TabView {
+//            ShapeView(selectedIcon: $selectedIcon)
+//                .tabItem {
+//                    Text("Shape")
+//                }
+//            ColorView(r: $r, g: $g, b: $b)
+//                .tabItem {
+//                    Text("Colour")
+//                }
+//            TestView(r: $r, g: $g, b: $b)
+//                .tabItem {
+//                    Text("Test")
+//                }
+//        }
+//    }
+//}
+
+//Final Practice Question (Timer)
+let refreshInterval = 2.0
+
+struct TrafficLight: View {
+    var count: Int
+    
     var body: some View {
         VStack {
-            HStack {
-                Text("Red")
-                Slider(value: $r, in: 0...1) {
-                    Text("Red")
-                }
-            }
-            .padding()
-            HStack {
-                Text("Green")
-                Slider(value: $g, in: 0...1) {
-                    Text("Green")
-                }
-            }
-            .padding()
-            HStack {
-                Text("Blue")
-                Slider(value: $b, in: 0...1) {
-                    Text("Blue")
-                }
-            }
-            .padding()
+            Image(systemName: count >= 2 ? "circle.fill" : "circle")
+                .foregroundColor(Color.red)
+            Image(systemName: count == 1 ? "circle.fill" : "circle")
+                .foregroundColor(Color.yellow)
+            Image(systemName: count == 0 ? "circle.fill" : "circle")
+                .foregroundColor(Color.green)
         }
         .padding()
-    }
-}
-
-struct TestView: View {
-    @Binding var r: CGFloat
-    @Binding var g: CGFloat
-    @Binding var b: CGFloat
-    var body: some View {
-        Circle()
-            .foregroundColor(Color.init(red: r, green: g, blue: b, opacity: 1))
-            .padding()
-            .frame(width: 250, height: 250)
-    }
-}
-
-struct ShapeView: View {
-    @Binding var selectedIcon: String
-    let icons = ["paintbrush", "pencil"]
-    var body: some View {
-        Picker("Icon", selection: $selectedIcon) {
-            ForEach(icons, id: \.self) { icon in
-                Image(systemName: icon)
-            }
-        }
-        .pickerStyle(.wheel)
+        .border(Color.black)
+        
     }
 }
 
 struct MainView: View {
-    @State private var selectedIcon: String = "paintbrush"
-    @State private var r: CGFloat = 0.5
-    @State private var g: CGFloat = 1
-    @State private var b: CGFloat = 0.2
+    //fire and event every predetermined interval, in this case 2 (refreshInterval)
+    @State private var timer = Timer.publish(every: refreshInterval, on: .main, in: .common).autoconnect()
+    @State private var count = 2
+
+    
     var body: some View {
-        TabView {
-            ShapeView(selectedIcon: $selectedIcon)
-                .tabItem {
-                    Text("Shape")
+        VStack{
+            Spacer()
+            VStack {
+                TrafficLight(count: count) // 0, 1, 2, 3, 4, 5
+                HStack {
+                    TrafficLight(count: (count + 2) % 5) // 2, 3, 4, 0, 1, 2
+                    Image(systemName: "cross")
+                        .resizable()
+                        .frame(height: 50)
+                    TrafficLight(count: (count + 2) % 5)
                 }
-            ColorView(r: $r, g: $g, b: $b)
-                .tabItem {
-                    Text("Colour")
-                }
-            TestView(r: $r, g: $g, b: $b)
-                .tabItem {
-                    Text("Test")
-                }
+                TrafficLight(count: count)
+            }
+            .padding()
+            //Handle the timer event here
+            .onReceive(timer) { _ in
+                count = (count + 1) % 6
+            }
+            //use when you want something to run on startup
+            //       .onAppear({
+            //            Task({doSomething()})
+            //        })
         }
     }
 }
 
+
 #Preview{
     ///needed if using @Model, otherwise preview will crash and you will have a bad time :(
-    //MainView().modelContainer(for: InventoryItem.self).preferredColorScheme(.dark)
+//    MainView().modelContainer(for: InventoryItem.self).preferredColorScheme(.dark)
     MainView()
 }
